@@ -36,7 +36,7 @@ class CreateProgramAccount extends Component implements HasForms
             ->where('password', $password)
             ->exists();
 
-        if (!$checkCredentials) {
+        if ($username && $password && !$checkCredentials) {
             throw new \Exception("Invalid username/password");
         }
 

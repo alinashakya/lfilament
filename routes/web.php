@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 //    return view('welcome');
 //});
 
-Route::get('/', Todos::class);
+Route::get('/', ProgramAccount::class);
 Route::get('/counter', Counter::class);
 Route::get('/hello-world', HelloWorld::class);
 Route::get('/posts', ShowPosts::class);

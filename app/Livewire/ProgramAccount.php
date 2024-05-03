@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\SelectColumn;
@@ -70,14 +71,6 @@ class ProgramAccount extends Component implements HasForms, HasTable
                     })
             ])
             ->searchable()
-            ->filters([
-                SelectFilter::make('program_account_status')
-                    ->multiple()
-                    ->options([
-                        'active' => 'Active',
-                        'inactive' => 'Inactive'
-                    ])
-            ])
             ->headerActions([
                 Action::make('create')
                     ->label('Create')
@@ -92,16 +85,15 @@ class ProgramAccount extends Component implements HasForms, HasTable
                     ->slideOver()
                     ->hiddenLabel()
                     ->form(\App\Models\ProgramAccount::form()),
-//                Action::make('delete')
-//                    ->requiresConfirmation()
-//                    ->action(fn (\App\Models\ProgramAccount $record) => $record->delete()),
-//                Action::make('Check Credentials')
-//                    ->accessSelectedRecords(true)
-//                    ->action(function () {
-////
-//                    }),
+                DeleteAction::make()
+                    ->hiddenLabel()
+                    ->action(function (\App\Models\ProgramAccount $record) {
+                        dd($record);
+                        $record->delete();
+                        alert('Program Account Deleted', 'The program account has been deleted successfully.');
+                    }),
+                    //->action(fn (\App\Models\ProgramAccount $record) => $record->delete()),
             ], position: ActionsPosition::BeforeCells);
-            //->recordUrl(fn(Model $record) => route('programs.show', $record));;
     }
 
     public function render()
